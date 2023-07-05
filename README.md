@@ -6,12 +6,11 @@ environment.
 
 ## Challenges
 
-1.  Code will be provided to Preview as a string. This string must be executed safely.
-
-2.  This code might have advanced JavaScript in it (<em>e.g.</em>, JSX) that the browser
+-   Code will be provided to Preview as a string. This string must be executed safely.
+-   This code might have advanced JavaScript in it (<em>e.g.</em>, JSX) that the browser
     cannot execute.
-
-        - will need to use a transpiler, like Babel.
-
-3.  The code might have import statements for other JavaScript or CSS files. These
+    -   will need to use a transpiler, like Babel. For this app, we can:
+        -   setup a backend server to traspile the sent code
+        -   use an in-browser transpiler
+-   The code might have import statements for other JavaScript or CSS files. These
     import statements must be dealt with <em>before</em> executing the code.
