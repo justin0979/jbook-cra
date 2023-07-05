@@ -1,8 +1,8 @@
 # Interactive Coding Environment
 
-Application that is able to create text cells and code cells with a preview window
-beside each cell. Multiple languages will be able to be configured into this
-environment.
+React application that is able to locally (on the user's personal machine) create text
+cells and code cells with a preview window beside each cell. Multiple programming
+languages will be able to be configured into this environment.
 
 ## Challenges
 
@@ -17,3 +17,17 @@ environment.
 3.  The code might have import statements for other JavaScript or CSS files. These
     import statements must be dealt with <em>before</em> executing the code.
     -   will need to find all the modules the user has imported from NPM
+
+### Transpiling & Bundling Locally
+
+-   Removes an extra request to the API server (which means faster code execution).
+-   An API server will not have to be maintained.
+-   Less complexity - no moving code back and forth.
+
+This calls for webpack needing to built into the react app with a custom plugin to
+fetch individual files from NPM.
+
+#### Problem with bundling locally is that webpack does NOT work in the browser.
+
+Solve webpack problem by using a webpack and babel replacement called
+[esbuild](https://esbuild.github.io/).
