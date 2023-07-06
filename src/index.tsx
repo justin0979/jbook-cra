@@ -1,5 +1,6 @@
+import * as esbuild from "esbuild-wasm";
 import ReactDOM from "react-dom/client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,
@@ -8,6 +9,18 @@ const root = ReactDOM.createRoot(
 const App = () => {
   const [input, setInput] = useState("");
   const [code, setCode] = useState(""); // transpiled & bundled code to be in the pre element
+
+  const startService = async () => {
+    const service = await esbuild.startService({
+      worker: true,
+      wasmURL: "/esbuild.wasm",
+    });
+    console.log(service);
+  };
+
+  useEffect(() => {
+    startService();
+  }, []);
 
   const onClick = () => {
     console.log(input);

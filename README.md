@@ -31,3 +31,16 @@ fetch individual files from NPM.
 
 Solve webpack problem by using a webpack and babel replacement called
 [esbuild](https://esbuild.github.io/).
+
+### Esbuild
+
+Contains:
+
+-   build: S => (g(), $.build(S))
+-   serve: f serve(S, K)
+-   stop: f stop()
+-   transform: f transforms(S, K)
+
+`transform` will attempt to execute transpiling on the code that is user provided.
+
+`build` bundles the user provided code. Bundling in the browser requires extra setup.
