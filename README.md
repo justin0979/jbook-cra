@@ -82,6 +82,15 @@ fetch the above `index.js`.
 
 ### Esbuild Bundling Process
 
+To create a bundle in the browser with esbuild, `onResolve` and `onLoad` will need
+to be used.
+
+Both `onResolve` and `onLoad` have an object with `filter` that is a regular expression.
+The regex controls when `onResolve` & `onLoad` are executed. `onResolve` handles the
+different types of files attempting to be loaded.
+<em>e.g.</em>, one `onResolve` may have a `filter` for loading a JS file, and another
+for loading a CSS file.
+
 |                                      Description                                      |       Step       |
 | :-----------------------------------------------------------------------------------: | :--------------: |
 |                    Figure out where the `index.js` file is stored                     | `onResolve` step |
