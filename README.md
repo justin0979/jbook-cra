@@ -79,3 +79,13 @@ if (process.env.NODE_ENV === 'production') {
 
 To help with getting the above JS code, UNPKG will be used (`unpkg.com/react`) to
 fetch the above `index.js`.
+
+### Esbuild Bundling Process
+
+|                                      Description                                      |       Step       |
+| :-----------------------------------------------------------------------------------: | :--------------: |
+|                    Figure out where the `index.js` file is stored                     | `onResolve` step |
+|                        Attempt to load up the `index.js` file                         |  `onLoad` step   |
+|           Parse the `index.js` file, find any `import`/`require`/`exports`            |                  |
+| If there are any `import`/`require`/`exports`, figure out where the requested file is | `onResolve` step |
+|                             Attempt to load that file up                              |  `onLoad` step   |
