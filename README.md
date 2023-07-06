@@ -51,6 +51,31 @@ Contains:
 import React from "react";
 ```
 
-`esbuild` will look for a filesystem that the browser will not have. The app will
-intercept the request from `esbuild` for `react` code and send a requst to the NPM
-Registry.
+`esbuild` will look for a filesystem that the browser will not have. The app will a
+plugin to intercept the request from `esbuild` for `react` code and send a request to
+the NPM Registry to get the URL to `react`.
+
+Running the following in a command line:
+
+```sh
+npm view react dist.tarball
+```
+
+will return `https://registry.npmjs.org/react/-/react-18.2.0.tgz`. This provides the
+`react` source code.
+
+For this app, inside of the tarball is `/package/index.js` which
+has the code:
+
+```JavaScript
+if (process.env.NODE_ENV === 'production') {
+    module.exports = require('./cjs/react.production.min.js');
+} else {
+    module.exports = require('./cjs/react.development.js');
+}
+```
+
+`esbuild` will interpret the `require()` statements in order to join the needed files.
+
+To help with getting the above JS code, UNPKG will be used (`unpkg.com/react`) to
+fetch the above `index.js`.
