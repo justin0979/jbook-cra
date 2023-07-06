@@ -91,6 +91,15 @@ different types of files attempting to be loaded.
 <em>e.g.</em>, one `onResolve` may have a `filter` for loading a JS file, and another
 for loading a CSS file.
 
+The `namespace` is similar to `filter` in that it specifies a set of files. An example
+of applying an `onLoad` on only files with a `namespace` of `a`:
+
+```javascript
+build.onResolve({...}, async (args: any) => ({ path: args.path, namespace: 'a' }));
+
+build.onLoad({ filter: /.*/, namespace: 'a] }', async (args: any) => {...});
+```
+
 |                                      Description                                      |       Step       |
 | :-----------------------------------------------------------------------------------: | :--------------: |
 |                    Figure out where the `index.js` file is stored                     | `onResolve` step |
