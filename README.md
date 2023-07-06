@@ -44,3 +44,13 @@ Contains:
 `transform` will attempt to execute transpiling on the code that is user provided.
 
 `build` bundles the user provided code. Bundling in the browser requires extra setup.
+
+`build` relies on a file system. If user writes:
+
+```JavaScript
+import React from "react";
+```
+
+`esbuild` will look for a filesystem that the browser will not have. The app will
+intercept the request from `esbuild` for `react` code and send a requst to the NPM
+Registry.
