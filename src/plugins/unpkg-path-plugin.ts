@@ -22,7 +22,13 @@ export const unpkgPathPlugin = () => {
         if (args.path.includes("./") || args.path.includes("../")) {
           return {
             namespace: "a",
-            path: new URL(args.path, args.importer + "/").href,
+            // args.importer = "https://unpkg.com/nested-test-pkg"
+            // args.path = "./utils"
+            // add "/" to end so new URL() will append 'utils' to importer
+            path: new URL(
+              args.path,
+              "https://unpkg.com" + args.resolveDir + "/",
+            ).href,
           };
         }
 
@@ -55,16 +61,20 @@ export const unpkgPathPlugin = () => {
           return {
             loader: "jsx",
             contents: `
-              const message = require('medium-test-pkg');
+              const message = require('nested-test-pkg');
               console.log(message);
               `,
           };
         }
 
-        const { data } = await axios.get(args.path);
+        /*
+         *  resolveDir holds what unpkg.com sends as where to find the index.js
+         */
+        const { data, request } = await axios.get(args.path);
         return {
           loader: "jsx",
           contents: data,
+          resolveDir: new URL("./", request.responseURL).pathname,
         };
       });
     },
