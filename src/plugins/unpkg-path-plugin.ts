@@ -22,9 +22,11 @@ export const unpkgPathPlugin = () => {
         if (args.path.includes("./") || args.path.includes("../")) {
           return {
             namespace: "a",
-            // args.importer = "https://unpkg.com/nested-test-pkg"
-            // args.path = "./utils"
-            // add "/" to end so new URL() will append 'utils' to importer
+            /*
+             *  args.importer = "https://unpkg.com/nested-test-pkg"
+             *  args.path = "./utils"
+             *  add "/" to end so new URL() will append 'utils' to importer
+             */
             path: new URL(
               args.path,
               "https://unpkg.com" + args.resolveDir + "/",
