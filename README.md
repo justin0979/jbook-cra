@@ -1,5 +1,6 @@
 # Interactive Coding Environment
 
+<sub>I will reorganize docs later</sub>
 React application that is able to locally (on the user's personal machine) create text
 cells and code cells with a preview window beside each cell. Multiple programming
 languages will be able to be configured into this environment.
@@ -107,3 +108,27 @@ build.onLoad({ filter: /.*/, namespace: 'a] }', async (args: any) => {...});
 |           Parse the `index.js` file, find any `import`/`require`/`exports`            |                  |
 | If there are any `import`/`require`/`exports`, figure out where the requested file is | `onResolve` step |
 |                             Attempt to load that file up                              |  `onLoad` step   |
+
+### onResolve
+
+`onResolve` will find where `index.js` is stored. This function overrides esbuild's
+natural process of finding out what a file's path is.
+
+Only one `onResolve` function is needed. It can be defined with multiple `if`
+statements to determine paths through one `filter`:
+
+```javascript
+build.onResolve({ filter: /.*/ }, () => {...});
+```
+
+For this application, several `onResolve` functions will have more specific `filter`s:
+
+```javascript
+build.onResolve({ filter: /^index\.js$/ }, () => ({ path: "index.js" namespace: "a" }));
+build.onResolve({ filter: /^\.{1,2}\// }, (args: any) => ({ path:..., namespace: "a" }));
+build.onResolve({ filter: /\.*/ }, (...) => {...});
+```
+
+This first `filter` looks for exactly "index.js", the second handles relative paths
+(<em>i.e.</em>, "./" or "../", for something like "./utils"), and the last will handle
+the main file of a module.
