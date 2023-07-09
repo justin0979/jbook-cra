@@ -35,11 +35,22 @@ export const fetchPlugin = (inputCode: string) => {
 
         const fileType = args.path.match(/\.css$/) ? "css" : "jsx"; // find file ext.
 
+        /*
+         *  escaped removes all new lines and finds all single and double quotes and
+         *  have a backslash prepended to them so that the quotes do not end the single
+         *  quote in style.innerText below. Removal of new lines is because the string
+         *  for innerText is within single quotes and not using template strings.
+         */
+        const escaped = data
+          .replace(/\n/g, "")
+          .replace(/"/g, '\\"')
+          .replace(/'/g, "\\'");
+
         const contents =
           fileType === "css"
             ? `
             const style = document.createElement('style');
-            style.innerText = 'body { background-color: "red" }';
+            style.innerText = '${escaped}';
             document.head.appendChild(style);
          `
             : data;
