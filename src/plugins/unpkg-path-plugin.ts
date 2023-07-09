@@ -6,7 +6,7 @@ const fileCache = localForage.createInstance({
   name: "filecache",
 });
 
-export const unpkgPathPlugin = () => {
+export const unpkgPathPlugin = (inputCode: string) => {
   return {
     name: "unpkg-path-plugin",
     setup(build: esbuild.PluginBuild) {
@@ -43,13 +43,6 @@ export const unpkgPathPlugin = () => {
           namespace: "a",
           path: `https://unpkg.com/${args.path}`,
         };
-
-        // else if (args.path === "tiny-test-pkg") {
-        // return {
-        //   path: "https://unpkg.com/tiny-test-pkg@1.0.0/index.js",
-        //   namespace: "a",
-        // };
-        // }
       });
 
       /*
@@ -67,10 +60,7 @@ export const unpkgPathPlugin = () => {
         if (args.path === "index.js") {
           return {
             loader: "jsx",
-            contents: `
-              import react, { useState } from "react-select";
-              console.log(react, useState);
-              `,
+            contents: inputCode, // user code from textarea
           };
         }
 

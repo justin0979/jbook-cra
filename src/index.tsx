@@ -7,11 +7,14 @@ const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,
 );
 
+/*
+ *  code: transpiled & bundled code
+ *  startService: defined when component is mounted.
+ */
 const App = () => {
   const ref = useRef<any>();
-  const [input, setInput] = useState("");
-  const [code, setCode] = useState(""); // transpiled & bundled code to be in the pre element
-
+  const [input, setInput] = useState(""); // user code in textarea sent to unpkgPathPlugin()
+  const [code, setCode] = useState("");
   const startService = async () => {
     ref.current = await esbuild.startService({
       worker: true,
@@ -32,7 +35,7 @@ const App = () => {
       entryPoints: ["index.js"],
       bundle: true,
       write: false,
-      plugins: [unpkgPathPlugin()],
+      plugins: [unpkgPathPlugin(input)],
       define: {
         "process.env.NODE_ENV": '"production"',
         global: "window",
