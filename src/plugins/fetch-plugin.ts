@@ -17,9 +17,17 @@ export const fetchPlugin = (inputCode: string) => {
         };
       });
 
-      build.onLoad({ filter: /\.css$/ }, async (args: any) => {
-        // Check to see if we have already fetched this file
-        // and if it is in the cache
+      /*
+       *  This onLoad is used to extract duplicated code dealing with caching.
+       *  esbuild will check this onLoad, if it has cached data, then onLoad will
+       *  return the cached data; otherwise, esbuild will continue to check the
+       *  other onLoad's until an onLoad returns an object.
+       */
+      build.onLoad({ filter: /.*/ }, async (args: any) => {
+        /**
+         *  Check to see if we have already fetched this file
+         *  and if it is in the cache
+         */
         const cachedResult =
           await fileCache.getItem<esbuild.OnLoadResult>(args.path);
 
@@ -27,10 +35,9 @@ export const fetchPlugin = (inputCode: string) => {
         if (cachedResult) {
           return cachedResult;
         }
+      });
 
-        /*
-         *  resolveDir holds what path unpkg.com sends as where to find the index.js
-         */
+      build.onLoad({ filter: /\.css$/ }, async (args: any) => {
         const { data, request } = await axios.get(args.path);
 
         /*
@@ -50,6 +57,9 @@ export const fetchPlugin = (inputCode: string) => {
             document.head.appendChild(style);
          `;
 
+        /*
+         *  resolveDir holds what path unpkg.com sends as where to find the index.js
+         */
         const result: esbuild.OnLoadResult = {
           loader: "jsx",
           contents: contents,
@@ -62,21 +72,11 @@ export const fetchPlugin = (inputCode: string) => {
       });
 
       build.onLoad({ filter: /.*/ }, async (args: any) => {
-        // Check to see if we have already fetched this file
-        // and if it is in the cache
-        const cachedResult =
-          await fileCache.getItem<esbuild.OnLoadResult>(args.path);
-
-        // if it is, return it immediately
-        if (cachedResult) {
-          return cachedResult;
-        }
+        const { data, request } = await axios.get(args.path);
 
         /*
          *  resolveDir holds what path unpkg.com sends as where to find the index.js
          */
-        const { data, request } = await axios.get(args.path);
-
         const result: esbuild.OnLoadResult = {
           loader: "jsx",
           contents: data,
