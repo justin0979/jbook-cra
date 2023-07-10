@@ -132,3 +132,9 @@ build.onResolve({ filter: /\.*/ }, (...) => {...});
 This first `filter` looks for exactly "index.js", the second handles relative paths
 (<em>i.e.</em>, "./" or "../", for something like "./utils"), and the last will handle
 the main file of a module.
+
+## Considerations Around Code Execution
+
+-   User-provided code might throw errors and causing program to crash.
+-   User-provided code might mutate the DOM, causing program to crash
+-   User might accdentally run code provided by another malicious user
