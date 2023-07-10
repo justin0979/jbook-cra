@@ -52,10 +52,18 @@ const App = () => {
   };
 
   const html = `
-  <script>
-    ${code}
-  </script>
-    `;
+    <html>
+      <head></head>
+      <body>
+        <div id="root"></div>
+        <script>
+        window.addEventListener("message", (event) => {
+          console.log(event.data);
+        }, false);
+        </script>
+      </body>
+    </html>
+  `;
 
   return (
     <div>
