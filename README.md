@@ -1,9 +1,18 @@
 # Interactive Coding Environment
 
 <sub>I will reorganize docs later</sub>
+
 React application that is able to locally (on the user's personal machine) create text
 cells and code cells with a preview window beside each cell. Multiple programming
 languages will be able to be configured into this environment.
+
+## Steps of Completed Application
+
+1. Run command to start application (<em>e.g.</em>, `jbook serve`)
+    - This should start a server on `localhost:4005`
+2. User will write code into an editor
+3. App bundles code in the browser
+4. Execute user's code in an `iframe`
 
 ## Challenges
 
