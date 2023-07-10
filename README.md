@@ -137,4 +137,5 @@ the main file of a module.
 
 -   User-provided code might throw errors and causing program to crash.
 -   User-provided code might mutate the DOM, causing program to crash
+    -   <em>e.g.</em>, user types in `document.body.innerHTML = '';`, which will wipe out webpage body
 -   User might accdentally run code provided by another malicious user
