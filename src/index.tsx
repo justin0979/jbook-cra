@@ -69,9 +69,13 @@ const App = () => {
         <button onClick={onClick}>Submit</button>
       </div>
       <pre>{code}</pre>
-      <iframe src="/test.html"></iframe>
+      <iframe srcDoc={html} sandbox=""></iframe>
     </div>
   );
 };
+
+const html = `
+<h1>Local HTML doc</h1>
+`;
 
 root.render(<App />);
