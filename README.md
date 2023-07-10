@@ -139,3 +139,29 @@ the main file of a module.
 -   User-provided code might mutate the DOM, causing program to crash
     -   <em>e.g.</em>, user types in `document.body.innerHTML = '';`, which will wipe out webpage body
 -   User might accdentally run code provided by another malicious user
+
+`iframe`s can help isolate code. An `iframe` is an `html` document within another
+`html` doucment. `iframs`s can be configured to allow communication between a parent
+document and a child document.
+
+#### Direct access between frames is allowed with BOTH of the following:
+
+-   The `iframe` element does not have a `sandbox` property, or has a `sandbox="allow-same-origin"` property
+-   The parent HTML doc and the frame HTML doc are fetched from the <em>exact same</em> Domain/Port/Protocol (`http` vs `https`)
+
+If `window.a = 1` is run in the parent document and `window.a = 3` is run in the child
+document, the parent can access the child's `a` and vice-versa with the following:
+
+For the child document to reach into the parent document:
+
+```javascript
+parent.window.a;
+// output: 1
+```
+
+For the parent document to react into the child document:
+
+```javascript
+document.querySelector("iframe").contentWindow.a;
+// output: 3
+```
