@@ -193,16 +193,51 @@ Inside of a React component:
 
 ```javascript
 const App = () => {
+    // run bundler
+    const onClick = async () => {
+        const result = await ref.current.build({...});
+
+        setCode(result.outputFiles[0].text);
+    }
+
+    const html = `
+    <script>{code}</script>
+        `;
+
     return (
         <div>
             <iframe srcDoc={html}></iframe>
         </div>
     );
 };
+```
 
+The above snippet will have an error when importing packages that contain a closing `script` tag. The error is
+due to the string parsed in `srcDoc` terminating the contents of the `script` too soon.
+
+The fix is to refactor the html var's string to have a message event listener and when the code is bundled,
+post the message via the `iframe`'s' `ref`:
+
+```javascript
 const html = `
-<div>
-  <h1>HTML content is here, so no need to fetch anything</h1>
-</div>
-`;
+<html>
+  <head></head>
+  <body>
+    <div id="root"></div>
+    <script>
+    window.addEventListener("message", (event) => {
+        eval(event.data);
+            })
+    </script>
+  </body>
+</html>
+`
+
+// run bundler
+const onClick = async () => {
+    const result = await ref.current.build({...});
+
+    // iframe is a ref to the iframe tag
+    iframe.current.contentWindow.postMessage(result.outputFiles[0].text, "*");
+}
 ```

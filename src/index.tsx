@@ -13,6 +13,7 @@ const root = ReactDOM.createRoot(
  */
 const App = () => {
   const ref = useRef<any>();
+  const iframe = useRef<any>();
   const [input, setInput] = useState(""); // user code in textarea sent to unpkgPathPlugin()
   const [code, setCode] = useState("");
   const startService = async () => {
@@ -48,7 +49,11 @@ const App = () => {
     /*
      *  result.outputFiles[0].text contains the transpiled and bundled code.
      */
-    setCode(result.outputFiles[0].text);
+    //setCode(result.outputFiles[0].text);
+    iframe.current.contentWindow.postMessage(
+      result.outputFiles[0].text,
+      "*",
+    );
   };
 
   const html = `
@@ -58,7 +63,7 @@ const App = () => {
         <div id="root"></div>
         <script>
         window.addEventListener("message", (event) => {
-          console.log(event.data);
+          eval(event.data);
         }, false);
         </script>
       </body>
@@ -77,7 +82,11 @@ const App = () => {
         <button onClick={onClick}>Submit</button>
       </div>
       <pre>{code}</pre>
-      <iframe srcDoc={html} sandbox="allow-scripts"></iframe>
+      <iframe
+        ref={iframe}
+        srcDoc={html}
+        sandbox="allow-scripts"
+      ></iframe>
     </div>
   );
 };
