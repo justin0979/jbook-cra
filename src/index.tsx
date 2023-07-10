@@ -31,6 +31,9 @@ const App = () => {
       return;
     }
 
+    /*
+     *  Run bundler here
+     */
     const result = await ref.current.build({
       entryPoints: ["index.js"],
       bundle: true,
@@ -42,7 +45,16 @@ const App = () => {
       },
     });
 
+    /*
+     *  result.outputFiles[0].text contains the transpiled and bundled code.
+     */
     setCode(result.outputFiles[0].text);
+
+    try {
+      eval(result.outputFiles[0].text);
+    } catch (err) {
+      alert(err);
+    }
   };
 
   return (
@@ -57,6 +69,7 @@ const App = () => {
         <button onClick={onClick}>Submit</button>
       </div>
       <pre>{code}</pre>
+      <iframe src="/test.html"></iframe>
     </div>
   );
 };
