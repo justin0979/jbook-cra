@@ -12,7 +12,7 @@ languages will be able to be configured into this environment.
     - This should start a server on something like `localhost:4005`
 2. User will write code into an editor
 3. App bundles code in the browser
-4. Execute user's code in an `iframe` on something like `localhost:4006`
+4. Execute user's code in an `iframe`
 
 ## Challenges
 
