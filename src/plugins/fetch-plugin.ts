@@ -69,7 +69,7 @@ export const fetchPlugin = (inputCode: string) => {
          `;
 
         /*
-         *  resolveDir holds what path unpkg.com sends as where to find the index.js
+         *  resolveDir holds what path unpkg.com sends
          */
         const result: esbuild.OnLoadResult = {
           loader: "jsx",
@@ -86,7 +86,7 @@ export const fetchPlugin = (inputCode: string) => {
         const { data, request } = await axios.get(args.path);
 
         /*
-         *  resolveDir holds what path unpkg.com sends as where to find the index.js
+         *  resolveDir holds what path unpkg.com sends
          */
         const result: esbuild.OnLoadResult = {
           loader: "jsx",

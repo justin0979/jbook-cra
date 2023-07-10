@@ -20,7 +20,7 @@ export const unpkgPathPlugin = () => {
         };
       });
 
-      // Hnadle main file of a module
+      // Hnadle main file of a module, e.g. react, react-dom
       build.onResolve({ filter: /.*/ }, async (args: any) => {
         return {
           namespace: "a",

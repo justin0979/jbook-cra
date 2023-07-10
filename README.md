@@ -52,7 +52,7 @@ Contains:
 import React from "react";
 ```
 
-`esbuild` will look for a filesystem that the browser will not have. The app will a
+`esbuild` will look for a filesystem that the browser will not have. The app will use a
 plugin to intercept the request from `esbuild` for `react` code and send a request to
 the NPM Registry to get the URL to `react`.
 
@@ -78,8 +78,8 @@ if (process.env.NODE_ENV === 'production') {
 
 `esbuild` will interpret the `require()` statements in order to join the needed files.
 
-To help with getting the above JS code, UNPKG will be used (`unpkg.com/react`) to
-fetch the above `index.js`.
+To help with getting the above JS code, [UNPKG](https://unpkg.com) will be used
+(`unpkg.com/react`) to fetch the above `index.js`.
 
 ### Esbuild Bundling Process
 
