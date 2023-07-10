@@ -136,9 +136,12 @@ the main file of a module.
 ## Considerations Around Code Execution
 
 -   User-provided code might throw errors and causing program to crash.
+    -   Solved if execute user's code in an `iframe`
 -   User-provided code might mutate the DOM, causing program to crash
     -   <em>e.g.</em>, user types in `document.body.innerHTML = '';`, which will wipe out webpage body
+    -   Solved if execute user's code in an `iframe`
 -   User might accdentally run code provided by another malicious user
+    -   Solved if execute user's code in an iframe with direct communication disabled
 
 `iframe`s can help isolate code. An `iframe` is an `html` document within another
 `html` doucment. `iframs`s can be configured to allow communication between a parent
