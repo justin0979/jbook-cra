@@ -17,7 +17,8 @@ languages will be able to be configured into this environment.
 #### Downside
 
 Some in-browser features will not be accessible to the user's code
-(<em>e.g.</em>, `localStorage.getItem("something")` will not work)
+(<em>e.g.</em>, `localStorage.getItem("something")` will not work) due to the use of the combination of
+`srcDoc` and `sandbox` in the `iframe`.
 
 ## Challenges
 
