@@ -12,7 +12,12 @@ languages will be able to be configured into this environment.
     - This should start a server on something like `localhost:4005`
 2. User will write code into an editor
 3. App bundles code in the browser
-4. Execute user's code in an `iframe`
+4. Execute user's code in an `iframe` with `sandbox=""`
+
+#### Downside
+
+Some in-browser features will not be accessible to the user's code
+(<em>e.g.</em>, `localStorage.getItem("something")` will not work)
 
 ## Challenges
 
