@@ -165,7 +165,7 @@ document and a child document.
 #### Direct access between frames is allowed with BOTH of the following:
 
 -   The `iframe` element does not have a `sandbox` property, or has a `sandbox="allow-same-origin"` property
--   The parent HTML doc and the frame HTML doc are fetched from the <em>exact same</em> Domain/Port/Protocol (`http` vs `https`)
+-   The parent HTML doc and the iframe HTML doc are fetched from the <em>exact same</em> Domain/Port/Protocol (`http` vs `https`)
 
 If `window.a = 1` is run in the parent document and `window.a = 3` is run in the child
 document, the parent can access the child's `a` and vice-versa with the following:
@@ -182,4 +182,26 @@ For the parent document to react into the child document:
 ```javascript
 document.querySelector("iframe").contentWindow.a;
 // output: 3
+```
+
+**_Note:_** For this app, the `iframe` will use `srcDoc` instead of `src`. `srcDoc` takes a string that will
+be generated locally. This way, there will be no different domain, port or protocol because content will not
+be fetched.
+
+Inside of a React component:
+
+```javascript
+const App = () => {
+    return (
+        <div>
+            <iframe srcDoc={html}></iframe>
+        </div>
+    );
+};
+
+const html = `
+<div>
+  <h1>HTML content is here, so no need to fetch anything</h1>
+</div>
+`;
 ```
