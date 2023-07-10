@@ -141,7 +141,8 @@ the main file of a module.
     -   <em>e.g.</em>, user types in `document.body.innerHTML = '';`, which will wipe out webpage body
     -   Solved if execute user's code in an `iframe`
 -   User might accdentally run code provided by another malicious user
-    -   Solved if execute user's code in an iframe with direct communication disabled
+    -   Solved if execute user's code in an `iframe` with direct communication disabled
+        -   Code that crashes inside of an `iframe` will not crash the parent document.
 
 `iframe`s can help isolate code. An `iframe` is an `html` document within another
 `html` doucment. `iframs`s can be configured to allow communication between a parent
