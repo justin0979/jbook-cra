@@ -27,16 +27,6 @@ export const unpkgPathPlugin = () => {
           path: `https://unpkg.com/${args.path}`,
         };
       });
-
-      /*
-       *  onLoad uses the path found in onResolve to load the file. Overrides esbuild's
-       *  natural way of loading a file by just reading the file off of a file system
-       *  by loading the object below.
-       *  Once the object is loaded to esbuild, esbuild will attempt to parse the file
-       *  for any imports/exports. If found, esbuild will repeat the onResolve and
-       *  onLoad steps to find the path of the imported/exported file and then load
-       *  the file from the path.
-       */
     },
   };
 };

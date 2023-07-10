@@ -6,6 +6,16 @@ const fileCache = localForage.createInstance({
   name: "filecache",
 });
 
+/*
+ *  Function to handle loading files.
+ *  onLoad uses the path found in onResolve to load the file.
+ *  Overrides esbuild's natural way of loading a file by just reading the file off of
+ *  a file system by loading the object below.
+ *  Once the object is loaded to esbuild, esbuild will attempt to parse the file
+ *  for any imports/exports. If found, esbuild will repeat the onResolve and
+ *  onLoad steps to find the path of the imported/exported file and then load
+ *  the file from the path.
+ */
 export const fetchPlugin = (inputCode: string) => {
   return {
     name: "fetch-plugin",
@@ -19,9 +29,10 @@ export const fetchPlugin = (inputCode: string) => {
 
       /*
        *  This onLoad is used to extract duplicated code dealing with caching.
-       *  esbuild will check this onLoad, if it has cached data, then onLoad will
-       *  return the cached data; otherwise, esbuild will continue to check the
-       *  other onLoad's until an onLoad returns an object.
+       *  esbuild will check this onLoad and do one of the following:
+       *  - if it has cached data, then onLoad will return the cached data
+       *  - otherwise, esbuild will continue to check the other onLoad's until an
+       *    onLoad returns an object.
        */
       build.onLoad({ filter: /.*/ }, async (args: any) => {
         /**
