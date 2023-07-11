@@ -1,8 +1,8 @@
-import Editor, { OnChange } from "@monaco-editor/react";
+import Editor, { OnMount, OnChange } from "@monaco-editor/react";
 
 interface CodeEditorProps {
   initialValue: string;
-  onChange: OnChange;
+  onChange: (value: string) => void;
 }
 
 const CodeEditor = ({ initialValue, onChange }: CodeEditorProps) => {
@@ -11,10 +11,16 @@ const CodeEditor = ({ initialValue, onChange }: CodeEditorProps) => {
    *  2nd parameter is a reference to the editor itself. This can be used to tell the
    *  editor when the contents of the editor have been changed.
    */
+  const handleChange: OnMount = (editor, monaco) => {
+    editor.onDidChangeModelContent(() => {
+      onChange(editor.getValue());
+    });
+  };
 
   return (
     <Editor
-      onChange={onChange}
+      //onChange={onChange}
+      onMount={handleChange}
       defaultValue={initialValue}
       theme="vs-dark"
       language="javascript"
