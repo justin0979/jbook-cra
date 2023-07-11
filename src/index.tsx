@@ -15,7 +15,6 @@ const App = () => {
   const ref = useRef<any>();
   const iframe = useRef<any>();
   const [input, setInput] = useState(""); // user code in textarea sent to unpkgPathPlugin()
-  const [code, setCode] = useState("");
   const startService = async () => {
     ref.current = await esbuild.startService({
       worker: true,
@@ -31,6 +30,8 @@ const App = () => {
     if (!ref.current) {
       return;
     }
+
+    iframe.current.srcdoc = html;
 
     /*
      *  Run bundler here
@@ -49,7 +50,6 @@ const App = () => {
     /*
      *  result.outputFiles[0].text contains the transpiled and bundled code.
      */
-    //setCode(result.outputFiles[0].text);
     iframe.current.contentWindow.postMessage(
       result.outputFiles[0].text,
       "*",
@@ -87,8 +87,8 @@ const App = () => {
       <div>
         <button onClick={onClick}>Submit</button>
       </div>
-      <pre>{code}</pre>
       <iframe
+        title="preview"
         ref={iframe}
         srcDoc={html}
         sandbox="allow-scripts"
