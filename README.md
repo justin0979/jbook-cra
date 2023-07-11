@@ -3,8 +3,8 @@
 <sub>I will reorganize docs later</sub>
 
 React application that is able to locally (on the user's personal machine) create text
-cells and code cells with a preview window beside each cell. Multiple programming
-languages will be able to be configured into this environment.
+cells and code cells with a preview window beside each cell through the use of the Monaco
+editor. Multiple programming languages will be able to be configured into this environment.
 
 ## Steps of Completed Application
 
