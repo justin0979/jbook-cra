@@ -2,6 +2,7 @@ import * as esbuild from "esbuild-wasm";
 import ReactDOM from "react-dom/client";
 import { useState, useEffect, useRef } from "react";
 import { fetchPlugin, unpkgPathPlugin } from "./plugins";
+import { CodeEditor } from "./components";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,
@@ -78,6 +79,7 @@ const App = () => {
 
   return (
     <div>
+      <CodeEditor />
       <textarea
         value={input}
         onChange={(e) => setInput(e.target.value)}
