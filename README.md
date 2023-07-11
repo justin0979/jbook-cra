@@ -12,7 +12,7 @@ languages will be able to be configured into this environment.
     - This should start a server on something like `localhost:4005`
 2. User will write code into an editor
 3. App bundles code in the browser
-4. Execute user's code in an `iframe` with `sandbox=""`
+4. Execute user's code in an `iframe` with `sandbox="allow-scripts"`
 
 #### Downside
 
@@ -113,7 +113,7 @@ of applying an `onLoad` on only files with a `namespace` of `a`:
 ```javascript
 build.onResolve({...}, async (args: any) => ({ path: args.path, namespace: 'a' }));
 
-build.onLoad({ filter: /.*/, namespace: 'a] }', async (args: any) => {...});
+build.onLoad({ filter: /.*/, namespace: 'a' }, async (args: any) => {...});
 ```
 
 |                                      Description                                      |       Step       |
@@ -154,9 +154,10 @@ the main file of a module.
     -   Solved if execute user's code in an `iframe`
 -   User-provided code might mutate the DOM, causing program to crash
     -   <em>e.g.</em>, user types in `document.body.innerHTML = '';`, which will wipe out webpage body
-    -   Solved if execute user's code in an `iframe`
+    -   Solved if `iframe`'s reference pre-installs html framework when user clicks submit
 -   User might accdentally run code provided by another malicious user
     -   Solved if execute user's code in an `iframe` with direct communication disabled
+        -   Done when setting `sandbox` to anything other than `allow-same-origin`
         -   Malicious code cannot be used to obtain security information from parent document
 
 `iframe`s can help isolate code. An `iframe` is an `html` document within another
@@ -186,7 +187,7 @@ document.querySelector("iframe").contentWindow.a;
 ```
 
 **_Note:_** For this app, the `iframe` will use `srcDoc` instead of `src`. `srcDoc` takes a string that will
-be generated locally. This way, there will be no different domain, port or protocol because content will not
+be generated locally. This way, there will be no different Domain/Port/Protocol because content will not
 be fetched.
 
 Inside of a React component:
