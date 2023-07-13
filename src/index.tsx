@@ -3,7 +3,7 @@ import * as esbuild from "esbuild-wasm";
 import ReactDOM from "react-dom/client";
 import { useState, useEffect, useRef } from "react";
 import { fetchPlugin, unpkgPathPlugin } from "./plugins";
-import { CodeEditor } from "./components";
+import { CodeEditor, Preview } from "./components";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,
@@ -15,7 +15,7 @@ const root = ReactDOM.createRoot(
  */
 const App = () => {
   const ref = useRef<any>();
-  const iframe = useRef<any>();
+  const [code, setCode] = useState("");
   const [input, setInput] = useState(""); // user code in textarea sent to unpkgPathPlugin()
   const startService = async () => {
     ref.current = await esbuild.startService({
@@ -33,8 +33,6 @@ const App = () => {
       return;
     }
 
-    iframe.current.srcdoc = html;
-
     /*
      *  Run bundler here
      */
@@ -50,55 +48,23 @@ const App = () => {
     });
 
     /*
-     *  result.outputFiles[0].text contains the transpiled and bundled code.
+     *  result.outputFiles[0].text contains the transpiled and bundled code that will
+     *  be sent off to the Preview component.
+     *
      */
-    iframe.current.contentWindow.postMessage(
-      result.outputFiles[0].text,
-      "*",
-    );
+    setCode(result.outputFiles[0].text);
   };
-
-  const html = `
-    <html>
-      <head></head>
-      <body>
-        <div id="root"></div>
-        <script>
-        window.addEventListener("message", (event) => {
-            try {
-              eval(event.data);
-            } catch (err) {
-              const root = document.querySelector("#root");
-              root.innerHTML = "<div style='color: red;'><h4>Runtime Error</h4>" + err + "</div>";
-              console.error(err);
-            }
-        }, false);
-        </script>
-      </body>
-    </html>
-  `;
 
   return (
     <div>
       <CodeEditor
-        initialValue={'import React from "react"'}
+        initialValue='import React from "react"'
         onChange={(value) => value && setInput(value)}
       />
-      <textarea
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        cols={50}
-        rows={15}
-      ></textarea>
       <div>
         <button onClick={onClick}>Submit</button>
       </div>
-      <iframe
-        title="preview"
-        ref={iframe}
-        srcDoc={html}
-        sandbox="allow-scripts"
-      ></iframe>
+      <Preview code={code} />
     </div>
   );
 };
