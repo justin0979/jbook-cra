@@ -35,10 +35,10 @@ export const fetchPlugin = (inputCode: string) => {
        *    onLoad returns an object.
        */
       build.onLoad({ filter: /.*/ }, async (args: any) => {
-        const cachedResult =
-          await fileCache.getItem<esbuild.OnLoadResult>(args.path);
+        const cachedResult = await fileCache.getItem<esbuild.OnLoadResult>(
+          args.path,
+        );
 
-        console.log("cachedResult =", cachedResult);
         if (cachedResult) {
           return cachedResult;
         }
