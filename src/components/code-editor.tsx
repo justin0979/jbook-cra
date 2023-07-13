@@ -1,10 +1,10 @@
-import MonacoEditor, { OnChange } from "@monaco-editor/react";
+import MonacoEditor, { OnMount, OnChange } from "@monaco-editor/react";
 import prettier from "prettier";
 import parser from "prettier/parser-babel";
 
 interface CodeEditorProps {
   initialValue: string;
-  onChange: OnChange;
+  onChange: (value: string) => void;
 }
 
 const CodeEditor = ({ initialValue, onChange }: CodeEditorProps) => {
@@ -14,12 +14,19 @@ const CodeEditor = ({ initialValue, onChange }: CodeEditorProps) => {
     // set the formatted value back in the editor
   };
 
+  const handleOnMount: OnMount = (editor, monaco) => {
+    editor.onDidChangeModelContent(() => {
+      onChange(editor.getValue());
+    });
+  };
+
   return (
     <div>
       <button onClick={onFormatClick}>Format</button>
 
       <MonacoEditor
-        onChange={onChange}
+        onMount={handleOnMount}
+        //onChange={onChange}
         defaultValue={initialValue}
         theme="vs-dark"
         defaultLanguage="javascript"
