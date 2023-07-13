@@ -17,13 +17,15 @@ const CodeEditor = ({ initialValue, onChange }: CodeEditorProps) => {
     const unformatted = editorRef.current.getValue();
 
     // format the value
-    const formatted = prettier.format(unformatted, {
-      parser: "babel",
-      plugins: [parser],
-      useTabs: false,
-      semi: true,
-      singleQuote: true,
-    });
+    const formatted = prettier
+      .format(unformatted, {
+        parser: "babel",
+        plugins: [parser],
+        useTabs: false,
+        semi: true,
+        singleQuote: true,
+      })
+      .replace(/\n$/, "");
     // set the formatted value back in the editor
     editorRef.current.setValue(formatted);
   };
