@@ -9,7 +9,7 @@ interface ResizableProps {
 
 const Resizable = ({ direction, children }: ResizableProps) => {
   return (
-    <ResizableBox height={300} width={300} resizeHandles={["s"]}>
+    <ResizableBox height={300} width={Infinity} resizeHandles={["s"]}>
       {children}
     </ResizableBox>
   );
