@@ -36,7 +36,12 @@ const CodeEditor = ({ initialValue, onChange }: CodeEditorProps) => {
 
   return (
     <div>
-      <button onClick={onFormatClick}>Format</button>
+      <button
+        className="button button-format is-primary is-small"
+        onClick={onFormatClick}
+      >
+        Format
+      </button>
 
       <MonacoEditor
         onMount={handleOnMount}
