@@ -1,5 +1,5 @@
 import * as esbuild from "esbuild-wasm";
-import { fetchPlugin, unpkgPathPlugin } from "../plugins";
+import { fetchPlugin, unpkgPathPlugin } from "./plugins";
 
 /*
  *  esbuild.startService returns the bundler used to bundle the user's code. esbuild
@@ -11,7 +11,7 @@ let service: esbuild.Service;
  *  function to bundle code.
  *  rawCode is user input code that will be bundled
  */
-export default async (rawCode: string) => {
+const bundle = async (rawCode: string) => {
   if (!service) {
     service = await esbuild.startService({
       worker: true,
@@ -39,3 +39,5 @@ export default async (rawCode: string) => {
    */
   return result.outputFiles[0].text;
 };
+
+export default bundle;
