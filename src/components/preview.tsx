@@ -35,6 +35,7 @@ const Preview = ({ code }: PreviewProps) => {
 
   return (
     <iframe
+      style={{ backgroundColor: "white" }}
       title="preview"
       ref={iframe}
       srcDoc={html}

@@ -51,7 +51,7 @@ const CodeEditor = ({ initialValue, onChange }: CodeEditorProps) => {
         defaultValue={initialValue}
         theme="vs-dark"
         defaultLanguage="javascript"
-        height="30vh"
+        height="100%"
         options={{
           tabSize: 2,
           wordWrap: "on",
