@@ -43,6 +43,9 @@ const bundle = async (rawCode: string) => {
       err: "",
     };
   } catch (err) {
+    /*
+     *  Sends bundler errors to be displayed in Preview
+     */
     if (err instanceof Error) {
       return {
         code: "",
