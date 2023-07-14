@@ -9,6 +9,7 @@ interface ResizableProps {
 }
 
 const Resizable = ({ direction, children }: ResizableProps) => {
+  let resizableProps: ResizableBoxProps;
   const [innerHeight, setInnerHeight] = useState(window.innerHeight);
   const [innerWidth, setInnerWidth] = useState(window.innerWidth);
   const [width, setWidth] = useState(window.innerWidth * 0.75);
@@ -29,10 +30,11 @@ const Resizable = ({ direction, children }: ResizableProps) => {
     };
     window.addEventListener("resize", listener);
 
-    return () => window.removeEventListener("resize", listener);
-  }, []);
+    return () => {
+      window.removeEventListener("resize", listener);
+    };
+  }, [width]);
 
-  let resizableProps: ResizableBoxProps;
   if (direction === "horizontal") {
     resizableProps = {
       className: "resize-horizontal",
