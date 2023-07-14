@@ -9,9 +9,9 @@ interface ResizableProps {
 }
 
 const Resizable = ({ direction, children }: ResizableProps) => {
-  let resizableProps: ResizableBoxProps;
   const [innerHeight, setInnerHeight] = useState(window.innerHeight);
   const [innerWidth, setInnerWidth] = useState(window.innerWidth);
+  const [width, setWidth] = useState(window.innerWidth * 0.75);
 
   useEffect(() => {
     let timer: unknown;
@@ -22,6 +22,9 @@ const Resizable = ({ direction, children }: ResizableProps) => {
       timer = setTimeout(() => {
         setInnerHeight(window.innerHeight);
         setInnerWidth(window.innerWidth);
+        if (window.innerWidth * 0.75 < width) {
+          setWidth(window.innerWidth * 0.75);
+        }
       }, 100);
     };
     window.addEventListener("resize", listener);
@@ -29,14 +32,18 @@ const Resizable = ({ direction, children }: ResizableProps) => {
     return () => window.removeEventListener("resize", listener);
   }, []);
 
+  let resizableProps: ResizableBoxProps;
   if (direction === "horizontal") {
     resizableProps = {
       className: "resize-horizontal",
       maxConstraints: [innerWidth * 0.75, Infinity],
       minConstraints: [innerWidth * 0.2, Infinity],
       height: Infinity,
-      width: innerWidth * 0.75,
+      width: width,
       resizeHandles: ["e"],
+      onResizeStop: (event, data) => {
+        setWidth(data.size.width);
+      },
     };
   } else {
     resizableProps = {
