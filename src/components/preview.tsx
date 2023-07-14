@@ -3,6 +3,7 @@ import { useEffect, useRef } from "react";
 
 interface PreviewProps {
   code: string;
+  err: string;
 }
 
 const html = `
@@ -34,7 +35,7 @@ const html = `
     </html>
   `;
 
-const Preview = ({ code }: PreviewProps) => {
+const Preview = ({ code, err }: PreviewProps) => {
   const iframe = useRef<any>();
 
   useEffect(() => {
@@ -53,6 +54,7 @@ const Preview = ({ code }: PreviewProps) => {
         srcDoc={html}
         sandbox="allow-scripts"
       />
+      {err && <div className="preview-error">{err}</div>}
     </div>
   );
 };
