@@ -1,6 +1,6 @@
 import "bulmaswatch/superhero/bulmaswatch.min.css";
 import ReactDOM from "react-dom/client";
-import { CodeCell } from "./components";
+import { TextEditor } from "./components";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,
@@ -9,7 +9,7 @@ const root = ReactDOM.createRoot(
 const App = () => {
   return (
     <div>
-      <CodeCell />
+      <TextEditor />
     </div>
   );
 };
