@@ -26,6 +26,9 @@ const TextEditor = ({}: TextEditorProps) => {
     return () => document.removeEventListener("click", listener, true);
   }, []);
 
+  /*
+   *  Displays the editor version for typing in
+   */
   if (editing) {
     return (
       <div className="text-editor" ref={ref}>
@@ -34,9 +37,14 @@ const TextEditor = ({}: TextEditorProps) => {
     );
   }
 
+  /*
+   *  Displays the preview version
+   */
   return (
-    <div className="text-editor" onClick={() => setEditing(true)}>
-      <MDEditor.Markdown source={value} />
+    <div className="text-editor card" onClick={() => setEditing(true)}>
+      <div className="card-content">
+        <MDEditor.Markdown source={value} />
+      </div>
     </div>
   );
 };
