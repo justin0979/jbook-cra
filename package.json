@@ -16,7 +16,7 @@
     "@types/react-redux": "^7.1.25",
     "@types/react-resizable": "3.0.2",
     "@uiw/react-md-editor": "2.1.1",
-    "axios": "^1.4.0",
+    "axios": "1.4.0",
     "bulmaswatch": "^0.8.1",
     "esbuild-wasm": "0.8.27",
     "localforage": "^1.10.0",
@@ -27,6 +27,8 @@
     "react-redux": "^8.1.1",
     "react-resizable": "3.0.4",
     "react-scripts": "5.0.1",
+    "redux": "4.2.1",
+    "redux-thunk": "2.3.0",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
   },
