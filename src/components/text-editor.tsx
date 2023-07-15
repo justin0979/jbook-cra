@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import MDEditor from "@uiw/react-md-editor";
+import "./text-editor.css";
 
 interface TextEditorProps {}
 
