@@ -20,14 +20,14 @@ const initialState: CellState = {
 };
 
 const reducer = produce(
-  (state: CellState = initialState, action: Action) => {
+  (state: CellState = initialState, action: Action): CellState => {
     switch (action.type) {
       case ActionType.UPDATE_CELL:
         /*
          *  below code uses immer
          */
         state.data[action.payload.id].content = action.payload.content;
-        return;
+        return state;
       /*
        *  below return does not use immer
        */
@@ -44,7 +44,7 @@ const reducer = produce(
       case ActionType.DELETE_CELL:
         delete state.data[action.payload];
         state.order = state.order.filter((id) => id !== action.payload);
-        return;
+        return state;
       case ActionType.MOVE_CELL:
         const { direction } = action.payload;
         const index = state.order.findIndex(
@@ -54,13 +54,13 @@ const reducer = produce(
 
         // check to make sure that the targetIndex is within order array bounds
         if (targetIndex < 0 || targetIndex > state.order.length - 1) {
-          return;
+          return state;
         }
 
         state.order[index] = state.order[targetIndex];
         state.order[targetIndex] = action.payload.id;
 
-        return;
+        return state;
       case ActionType.INSERT_CELL_BEFORE:
         const cell: Cell = {
           content: "",
@@ -80,12 +80,13 @@ const reducer = produce(
           state.order.splice(foundIndex, 0, cell.id);
         }
 
-        return;
+        return state;
       default: {
         return state;
       }
     }
-  }
+  },
+  initialState
 );
 
 const randomId = () => {
