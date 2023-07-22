@@ -6,12 +6,11 @@ const CellList = () => {
     order.map((id) => data[id])
   );
 
-  return (
-    <div>
-      <h1>Cell List</h1>
-      <CellListItem />
-    </div>
-  );
+  const renderedCells = cells.map((cell) => (
+    <CellListItem key={cell.id} cell={cell} />
+  ));
+
+  return <div>{renderedCells}</div>;
 };
 
 export default CellList;

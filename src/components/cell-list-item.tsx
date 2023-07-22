@@ -1,9 +1,11 @@
-const CellListItem = () => {
-  return (
-    <div>
-      <h1>Cell List Item</h1>
-    </div>
-  );
+import { Cell } from "../state";
+
+interface CellListItemProps {
+  cell: Cell;
+}
+
+const CellListItem = ({ cell }: CellListItemProps) => {
+  return <div>{cell.id}</div>;
 };
 
 export default CellListItem;
