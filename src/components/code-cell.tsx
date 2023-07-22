@@ -3,21 +3,27 @@ import CodeEditor from "./code-editor";
 import Preview from "./preview";
 import bundle from "../bundler";
 import Resizable from "./resizable";
+import { Cell } from "../state";
+import { useActions } from "../hooks";
 
-const CodeCell = () => {
+interface CodeCellProps {
+  cell: Cell;
+}
+
+const CodeCell = ({ cell }: CodeCellProps) => {
   const [code, setCode] = useState(""); // transpiled and bundled code.
   const [err, setErr] = useState("");
-  const [input, setInput] = useState(""); // user code in textarea sent to unpkgPathPlugin()
+  const { updateCell } = useActions();
 
   useEffect(() => {
     const timer = setTimeout(async () => {
-      const output = await bundle(input);
+      const output = await bundle(cell.content);
       setCode(output.code);
       setErr(output.err);
     }, 1000);
 
     return () => clearTimeout(timer);
-  }, [input]);
+  }, [cell.content]);
 
   return (
     <Resizable direction="vertical">
@@ -26,8 +32,8 @@ const CodeCell = () => {
       >
         <Resizable direction="horizontal">
           <CodeEditor
-            initialValue='import React from "react"'
-            onChange={(value) => value && setInput(value)}
+            initialValue={cell.content}
+            onChange={(value) => updateCell(cell.id, value)}
           />
         </Resizable>
         <Preview code={code} err={err} />

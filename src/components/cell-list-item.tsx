@@ -10,7 +10,7 @@ interface CellListItemProps {
 const CellListItem = ({ cell }: CellListItemProps) => {
   let child: ReactNode;
   if (cell.type === "code") {
-    child = <CodeCell />;
+    child = <CodeCell cell={cell} />;
   } else {
     child = <TextEditor />;
   }
