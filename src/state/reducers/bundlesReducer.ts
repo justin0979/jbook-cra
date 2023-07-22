@@ -1,1 +1,1 @@
-export const cellsReducer = () => {};
+export const bundlesReducer = () => {};
