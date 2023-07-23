@@ -40,7 +40,7 @@ export const moveCell = (
 };
 
 export const insertCellAfter = (
-  id: string | null, // null is only for inserting cell at very end
+  id: string | null, // null is only for inserting cell at very beginning
   cellType: CellTypes
 ): InsertCellAfterAction => {
   return {
