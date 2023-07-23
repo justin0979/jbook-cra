@@ -13,7 +13,7 @@ interface CodeCellProps {
 const CodeCell = ({ cell }: CodeCellProps) => {
   const [code, setCode] = useState(""); // transpiled and bundled code.
   const [err, setErr] = useState("");
-  const { updateCell } = useActions();
+  const { updateCell } = useActions(); // update user input content
 
   useEffect(() => {
     const timer = setTimeout(async () => {

@@ -1,0 +1,31 @@
+.action-bar {
+  display: flex;
+  justify-content: end;
+}
+
+.up-hovered {
+  opacity: 0.25;
+  transition: opacity 0.3s;
+}
+
+.up-hovered:hover {
+  opacity: 1;
+}
+
+.down-hovered {
+  opacity: 0.25;
+  transition: opacity 0.3s;
+}
+
+.down-hovered:hover {
+  opacity: 1;
+}
+
+.delete-hovered {
+  opacity: 0.25;
+  transition: opacity 0.3s;
+}
+
+.delete-hovered:hover {
+  opacity: 1;
+}
