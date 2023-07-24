@@ -4,7 +4,7 @@
 
 React application that is able to locally (on the user's personal machine) create text
 cells and code cells with a preview window beside each cell through the use of the Monaco
-editor. Multiple programming languages will be able to be configured into this environment.
+editor. Multiple programming languages will be able to be configured into this environment (currently only `jsx` and `css` files).
 
 <img src="code_text_cell.png" alt="example cells image" style="height: 45vh; margin: 0 50%; transform: translateX(-50%)" />
 
