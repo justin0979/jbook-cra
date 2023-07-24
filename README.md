@@ -157,9 +157,10 @@ build.onResolve({ filter: /^\.{1,2}\// }, (args: any) => ({ path:..., namespace:
 build.onResolve({ filter: /\.*/ }, (...) => {...});
 ```
 
-This first `filter` looks for exactly "index.js", the second handles relative paths
-(<em>i.e.</em>, "./" or "../", for something like "./utils"), and the last will handle
-the main file of a module.
+- This first `filter` looks for exactly "index.js"
+- The second handles relative paths (<em>i.e.</em>, `./` or `../`, for something like
+  `./utils`)
+- The last will handle the main file of a module.
 
 </details>
 
