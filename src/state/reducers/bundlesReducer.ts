@@ -23,5 +23,6 @@ export const bundlesReducer = produce(
       default:
         return state;
     }
-  }
+  },
+  initialState
 );
