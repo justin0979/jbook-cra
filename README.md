@@ -1,44 +1,52 @@
 # Interactive Coding Environment
 
-<sub>I will reorganize docs later</sub>
+<sub>**_Note:_** I will reorganize docs later</sub>
 
 React application that is able to locally (on the user's personal machine) create text
 cells and code cells with a preview window beside each cell through the use of the Monaco
 editor. Multiple programming languages will be able to be configured into this environment.
 
-## Steps of Completed Application
+<details>
+<summary>
+<h2 style="display: inline-block;">Steps of Completed Application</h2>
+</summary>
 
 1. Run command to start application (<em>e.g.</em>, `jbook serve`)
-    - This should start a server on something like `localhost:4005`
+   - This should start a server on something like `localhost:4005`
 2. User will write code into an editor
 3. App bundles code in the browser
 4. Execute user's code in an `iframe` with `sandbox="allow-scripts"`
 
-#### Downside
+### Downside
 
 Some in-browser features will not be accessible to the user's code
 (<em>e.g.</em>, `localStorage.getItem("something")` will not work) due to the use of the combination of
 `srcDoc` and `sandbox` in the `iframe`.
 
-## Challenges
+</details>
+
+<details>
+  <summary>
+    <h2 style="display: inline-block;">Challenges</h2>
+  </summary>
 
 1.  Code will be provided to Preview as a string. This string must be executed safely.
 2.  This code might have advanced JavaScript in it (<em>e.g.</em>, JSX) that the browser
     cannot execute.
 
-    -   will need to use a transpiler, like Babel. For this app, we can:
-        -   setup a backend server to traspile the sent code
-        -   use an in-browser transpiler
+    - will need to use a transpiler, like Babel. For this app, we can:
+      - setup a backend server to transpile the sent code
+      - use an in-browser transpiler
 
 3.  The code might have import statements for other JavaScript or CSS files. These
     import statements must be dealt with <em>before</em> executing the code.
-    -   will need to find all the modules the user has imported from NPM
+    - will need to find all the modules the user has imported from NPM
 
 ### Transpiling & Bundling Locally
 
--   Removes an extra request to the API server (which means faster code execution).
--   An API server will not have to be maintained.
--   Less complexity - no moving code back and forth.
+- Removes an extra request to the API server (which means faster code execution).
+- An API server will not have to be maintained.
+- Less complexity - no moving code back and forth.
 
 This calls for webpack needing to built into the react app with a custom plugin to
 fetch individual files from NPM.
@@ -48,14 +56,19 @@ fetch individual files from NPM.
 Solve webpack problem by using a webpack and babel replacement called
 [esbuild](https://esbuild.github.io/).
 
-### Esbuild
+</details>
+
+<details>
+  <summary>
+    <h2 style="display: inline-block">Esbuild Summary & Use</h2>
+  </summary>
 
 Contains:
 
--   build: S => (g(), $.build(S))
--   serve: f serve(S, K)
--   stop: f stop()
--   transform: f transforms(S, K)
+- build: S => (g(), $.build(S))
+- serve: f serve(S, K)
+- stop: f stop()
+- transform: f transforms(S, K)
 
 `transform` will attempt to execute transpiling on the code that is user provided.
 
@@ -148,17 +161,23 @@ This first `filter` looks for exactly "index.js", the second handles relative pa
 (<em>i.e.</em>, "./" or "../", for something like "./utils"), and the last will handle
 the main file of a module.
 
+</details>
+
+<details>
+  <summary>
+    <h2 style="display: inline-block">Considerations Around Code Execution</h2>
+  </summary>
 ## Considerations Around Code Execution
 
--   User-provided code might throw errors and causing program to crash.
-    -   Solved if execute user's code in an `iframe`
--   User-provided code might mutate the DOM, causing program to crash
-    -   <em>e.g.</em>, user types in `document.body.innerHTML = '';`, which will wipe out webpage body
-    -   Solved if `iframe`'s reference pre-installs html framework when user clicks submit
--   User might accdentally run code provided by another malicious user
-    -   Solved if execute user's code in an `iframe` with direct communication disabled
-        -   Done when setting `sandbox` to anything other than `allow-same-origin`
-        -   Malicious code cannot be used to obtain security information from parent document
+- User-provided code might throw errors and causing program to crash.
+  - Solved if execute user's code in an `iframe`
+- User-provided code might mutate the DOM, causing program to crash
+  - <em>e.g.</em>, user types in `document.body.innerHTML = '';`, which will wipe out webpage body
+  - Solved if `iframe`'s reference pre-installs html framework when user clicks submit
+- User might accdentally run code provided by another malicious user
+  - Solved if execute user's code in an `iframe` with direct communication disabled
+    - Done when setting `sandbox` to anything other than `allow-same-origin`
+    - Malicious code cannot be used to obtain security information from parent document
 
 `iframe`s can help isolate code. An `iframe` is an `html` document within another
 `html` doucment. `iframs`s can be configured to allow communication between a parent
@@ -166,8 +185,8 @@ document and a child document.
 
 #### Direct access between frames is allowed with BOTH of the following:
 
--   The `iframe` element does not have a `sandbox` property, or has a `sandbox="allow-same-origin"` property
--   The parent HTML doc and the iframe HTML doc are fetched from the <em>exact same</em> Domain/Port/Protocol (`http` vs `https`)
+- The `iframe` element does not have a `sandbox` property, or has a `sandbox="allow-same-origin"` property
+- The parent HTML doc and the iframe HTML doc are fetched from the <em>exact same</em> Domain/Port/Protocol (`http` vs `https`)
 
 If `window.a = 1` is run in the parent document and `window.a = 3` is run in the child
 document, the parent can access the child's `a` and vice-versa with the following:
@@ -242,3 +261,5 @@ const onClick = async () => {
     iframe.current.contentWindow.postMessage(result.outputFiles[0].text, "*");
 }
 ```
+
+</details>
