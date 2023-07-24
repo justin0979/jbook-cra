@@ -167,10 +167,9 @@ the main file of a module.
   <summary>
     <h2 style="display: inline-block">Considerations Around Code Execution</h2>
   </summary>
-## Considerations Around Code Execution
 
-- User-provided code might throw errors and causing program to crash.
-  - Solved if execute user's code in an `iframe`
+- User-provided code might throw errors that cause program to crash.
+  - Solved if execute user's code is contained in an `iframe`
 - User-provided code might mutate the DOM, causing program to crash
   - <em>e.g.</em>, user types in `document.body.innerHTML = '';`, which will wipe out webpage body
   - Solved if `iframe`'s reference pre-installs html framework when user clicks submit
@@ -235,8 +234,8 @@ const App = () => {
 The above snippet will have an error when importing packages that contain a closing `script` tag. The error is
 due to the string parsed in `srcDoc` terminating the contents of the `script` too soon.
 
-The fix is to refactor the html var's string to have a message event listener and when the code is bundled,
-post the message via the `iframe`'s' `ref`:
+The fix is to refactor the `const html` var's string to have a message event listener and when the code is bundled,
+post the message via the `iframe`'s `ref`:
 
 ```javascript
 const html = `
