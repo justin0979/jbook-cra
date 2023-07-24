@@ -4,11 +4,13 @@ import { Action } from "../actions";
 import { stat } from "fs";
 
 interface BundlesState {
-  [cellId: string]: {
-    loading: boolean; // tells if app is currently processing a bundle
-    code: string;
-    err: string;
-  };
+  [cellId: string]:
+    | {
+        loading: boolean; // tells if app is currently processing a bundle
+        code: string;
+        err: string;
+      }
+    | undefined;
 }
 
 const initialState: BundlesState = {};

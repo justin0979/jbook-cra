@@ -1,29 +1,26 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import CodeEditor from "./code-editor";
 import Preview from "./preview";
-import bundle from "../bundler";
 import Resizable from "./resizable";
 import { Cell } from "../state";
 import { useActions } from "../hooks";
+import { useTypedSelector } from "../hooks";
 
 interface CodeCellProps {
   cell: Cell;
 }
 
 const CodeCell = ({ cell }: CodeCellProps) => {
-  const [code, setCode] = useState(""); // transpiled and bundled code.
-  const [err, setErr] = useState("");
-  const { updateCell } = useActions(); // update user input content
+  const { updateCell, createBundle } = useActions(); // update user input content
+  const bundle = useTypedSelector((state) => state.bundles[cell.id]);
 
   useEffect(() => {
     const timer = setTimeout(async () => {
-      const output = await bundle(cell.content);
-      setCode(output.code);
-      setErr(output.err);
+      createBundle(cell.id, cell.content);
     }, 1000);
 
     return () => clearTimeout(timer);
-  }, [cell.content]);
+  }, [cell.content, cell.id]);
 
   return (
     <Resizable direction="vertical">
@@ -40,7 +37,7 @@ const CodeCell = ({ cell }: CodeCellProps) => {
             onChange={(value) => updateCell(cell.id, value)}
           />
         </Resizable>
-        <Preview code={code} err={err} />
+        {bundle && <Preview code={bundle.code} err={bundle.err} />}
       </div>
     </Resizable>
   );
