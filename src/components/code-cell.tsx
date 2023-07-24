@@ -38,13 +38,18 @@ const CodeCell = ({ cell }: CodeCellProps) => {
         }
       `,
     ];
-
     for (let c of orderedCells) {
+      console.log(c.content);
       if (c.type === "code") {
-        cumulativeCode.push(c.content);
-      }
-      if (c.id === cell.id) {
-        break;
+        if (c.id === cell.id) {
+          cumulativeCode.push(c.content);
+          break;
+        } else {
+          const regex = /show\((.|\n|\r)+\)/g;
+          const check = c.content.replace(regex, "");
+
+          cumulativeCode.push(check);
+        }
       }
     }
 
