@@ -328,3 +328,10 @@ The future architecture just describes additional add-ons that can be developed.
   </table>
 
 </details>
+
+Lerna
+
+Lerna will make it very easy to consume updates between our modules on local
+machines as the modules are being developed. So, instead of having to re-publish
+to npm and re-installing into `node_modules`, lerna will setup a link from
+`node_modules` to a copy of the package on local machines.
