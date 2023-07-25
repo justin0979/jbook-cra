@@ -265,3 +265,34 @@ const onClick = async () => {
 ```
 
 </details>
+
+  <table>
+    <tr>
+      <th>CLI</th>
+      <td>
+        &#8226; Needs to know how to start up the Local API</br>
+        &#8226; Needs to know how to publish a notebook to the Public API
+      </td>
+    </tr>
+    <tr>
+      <th>Local Express API</th>
+      <td>
+        &#8226; Needs to serve up the react app</br>
+        &#8226; Needs to be able to save/load cells from a file
+      </td>
+    </tr>
+    <tr>
+      <th>Public Express API</th>
+      <td>
+        &#8226; Needs to serve up the react app</br>
+        &#8226; Needs to be able to save/load cells from a database</br>
+        &#8226; Needs to handle authentication/permissions/etc.
+      </td>
+    </tr>
+    <tr>
+      <th>React App</th>
+      <td>
+        &#8226; Needs to make its production assets available to <em>either</em> the local API <em>or</em> the public API
+      </td>
+    </tr>
+  </table>
