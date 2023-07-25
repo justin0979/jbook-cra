@@ -266,6 +266,9 @@ const onClick = async () => {
 
 </details>
 
+<details>
+  <summary><h2 style="display: inline-block">Future Architecture</h2></summary>
+
   <table>
     <tr>
       <th>CLI</th>
@@ -296,3 +299,5 @@ const onClick = async () => {
       </td>
     </tr>
   </table>
+
+</details>
