@@ -39,17 +39,15 @@ const CodeCell = ({ cell }: CodeCellProps) => {
       `,
     ];
     for (let c of orderedCells) {
-      console.log(c.content);
-      if (c.type === "code") {
-        if (c.id === cell.id) {
-          cumulativeCode.push(c.content);
-          break;
-        } else {
-          const regex = /show\((.|\n|\r)+\)/g;
-          const check = c.content.replace(regex, "");
+      if (c.type === "code" && c.id === cell.id) {
+        cumulativeCode.push(c.content);
+        break;
+      } else if (c.type === "code") {
+        const regex = /show\((\s|\S)+\)/g;
+        //const regex = /show(.)+/g;
+        const check = c.content.replace(regex, "");
 
-          cumulativeCode.push(check);
-        }
+        cumulativeCode.push(check);
       }
     }
 
