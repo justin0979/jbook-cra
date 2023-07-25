@@ -267,9 +267,36 @@ const onClick = async () => {
 </details>
 
 <details>
-  <summary><h2 style="display: inline-block">Future Architecture</h2></summary>
+  <summary>
+    <h2 style="display: inline-block">App's Architectures</h2>
+  </summary>
+
+Each of these packages will be developed and deployed as separate NPM packages.
 
   <table>
+    <caption>App's Current Architecture</caption>
+    <tr>
+      <th>CLI</th>
+      <td>jbook</td>
+    </tr>
+    <tr>
+      <th>Local Express API</th>
+      <td>@jbook/local-api</td>
+    </tr>
+    <tr>
+     <th>Public Express API</th>
+     <td>@jbook/public-api</td>
+    </tr>
+    <tr>
+      <th>React App</th>
+      <td>@jbook/local-client</td>
+    </tr>
+  </table>
+
+The future architecture just describes additional add-ons that can be developed.
+
+  <table>
+    <caption>App's Future Architecture</caption>
     <tr>
       <th>CLI</th>
       <td>
